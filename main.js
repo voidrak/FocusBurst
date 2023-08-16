@@ -13,13 +13,6 @@ let countMin = countdownEl_min.textContent;
 let countSec = countdownEl_sec.textContent;
 let timeoutSec;
 let timeoutMin;
-function countdownSec() {
-  countdownEl_sec.textContent = countSec;
-  countSec--;
-  if (countSec >= 0) {
-    timeoutSec = setTimeout(countdownSec, 1000);
-  }
-}
 
 function countdownMin() {
   countdownEl_min.textContent = countMin;
@@ -27,6 +20,20 @@ function countdownMin() {
   if (countMin >= 0) {
     timeoutMin = setTimeout(countdownMin, 60000);
   }
+}
+
+function countdownSec() {
+  
+    countdownEl_sec.textContent = countSec;
+    if(countSec==0){
+      countSec=59;
+    }
+    countSec--;
+    if (countSec >= 0) {
+      timeoutSec = setTimeout(countdownSec, 1000);
+    }
+  
+  
 }
 
 startBtn.addEventListener("click", () => {
