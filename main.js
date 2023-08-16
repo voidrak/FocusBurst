@@ -9,12 +9,20 @@ const pomodoroPlusBtn = document.querySelector(".pomodoro-plus");
 const breakLength = document.querySelector(".break h2");
 const pomodoroLength = document.querySelector(".pomodoro h2");
 
-let countMin = countdownEl_min.textContent;
+let countMin ;
 let countSec = countdownEl_sec.textContent;
 let timeoutSec;
 let timeoutMin;
 
 function countdownMin() {
+  if(countMin==1){
+    countMin=0;
+  }
+  if(countMin===0 && countSec===0){
+    clearTimeout(timeoutMin);
+    clearTimeout(timeoutSec);
+  // countdownEl_sec.textContent=0;
+  }
   countdownEl_min.textContent = countMin;
   countMin--;
   if (countMin >= 0) {
@@ -26,7 +34,7 @@ function countdownSec() {
   
     countdownEl_sec.textContent = countSec;
     if(countSec==0){
-      countSec=59;
+      countSec=60;
     }
     countSec--;
     if (countSec >= 0) {
