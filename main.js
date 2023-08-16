@@ -18,11 +18,13 @@ function countdownMin() {
   if(countMin==1){
     countMin=0;
   }
-  if(countMin===0 && countSec===0){
-    clearTimeout(timeoutMin);
+  if(countMin===0 ){
+    console.log("00");
     clearTimeout(timeoutSec);
-  // countdownEl_sec.textContent=0;
+    clearTimeout(timeoutMin);
+  countdownEl_sec.textContent=0;
   }
+  
   countdownEl_min.textContent = countMin;
   countMin--;
   if (countMin >= 0) {
@@ -32,6 +34,12 @@ function countdownMin() {
 
 function countdownSec() {
   
+  if(countSec===0){
+    console.log("00");
+    // clearTimeout(timeoutSec);
+    // clearTimeout(timeoutMin);
+  // countdownEl_sec.textContent=0;
+  }
     countdownEl_sec.textContent = countSec;
     if(countSec==0){
       countSec=60;
@@ -46,14 +54,15 @@ function countdownSec() {
 
 startBtn.addEventListener("click", () => {
   countMin = pomodoroLength.textContent;
-  countdownSec();
   countdownMin();
+  countdownSec();
 });
 
 resetBtn.addEventListener("click", () => {
-  clearTimeout(timeoutMin);
   clearTimeout(timeoutSec);
+  clearTimeout(timeoutMin);
   countdownEl_min.textContent = pomodoroLength.textContent;
+  countdownEl_sec.textContent="00";
 });
 
 breakPlusBtn.addEventListener("click", () => {
