@@ -13,57 +13,68 @@ const pomodoroLength = document.querySelector(".pomodoro h2");
 let pomodoroMinutes = parseInt(pomodoroLength.textContent);
 let breakMinutes = parseInt(breakLength.textContent);
 let seconds = 0;
-let countdownMinutes;
-let countdownSec;
+let countdownPomodoro;
+let countdownBreak;
 let isRunning = false;
 let minutesRemaining = 0;
 let secondsRemaining = 0;
 
+function playAlertSound() {
+  // Create an Audio object and provide the path to the sound file
+  let alertSound = new Audio("beep.mp3");
+  alertSound.play();
+}
+
 function startCountdown(minutes, seconds) {
   let totalSeconds = minutes * 60 + seconds;
 
-  countdownMinutes = setInterval(function () {
-    if (isRunning && totalSeconds != 0) {
+  countdownPomodoro = setInterval(function () {
+    if (isRunning && totalSeconds >= 0) {
       minutesRemaining = Math.floor(totalSeconds / 60);
       secondsRemaining = totalSeconds % 60;
 
       countdownEl_min.textContent = minutesRemaining;
-      countdownEl_sec.textContent = secondsRemaining;
+      countdownEl_sec.textContent =
+        secondsRemaining < 10 ? "0" + secondsRemaining : secondsRemaining;
+
+      if (totalSeconds === 0) {
+        clearInterval(countdownPomodoro);
+        playAlertSound();
+        breakCountdown(breakMinutes, 0);
+      }
 
       totalSeconds--;
-
-      if (totalSeconds < 0) {
-        clearInterval(countdownMinutes);
-      }
-    } else {
-      breakCountdown(breakMinutes, 0);
     }
   }, 1000);
 }
+
 function breakCountdown(minutes, seconds) {
+  pauseBtn.style.display = "none";
   let totalSeconds = minutes * 60 + seconds;
 
-  countdownSec = setInterval(function () {
-    if (totalSeconds != 0) {
-      let minutesRemaining = Math.floor(totalSeconds / 60);
-      let secondsRemaining = totalSeconds % 60;
+  countdownBreak = setInterval(function () {
+    if (totalSeconds >= 0) {
+      minutesRemaining = Math.floor(totalSeconds / 60);
+      secondsRemaining = totalSeconds % 60;
 
       countdownEl_min.textContent = minutesRemaining;
-      countdownEl_sec.textContent = secondsRemaining;
+      countdownEl_sec.textContent =
+        secondsRemaining < 10 ? "0" + secondsRemaining : secondsRemaining;
+
+      if (totalSeconds === 0) {
+        clearInterval(countdownBreak);
+        playAlertSound();
+        startCountdown(pomodoroMinutes, 0);
+        pauseBtn.style.display = "block";
+      }
 
       totalSeconds--;
-
-      if (totalSeconds < 0) {
-        clearInterval(countdownSec);
-      }
-    } else {
-      startCountdown(pomodoroMinutes, seconds);
     }
   }, 1000);
 }
 
 startBtn.addEventListener("click", () => {
-  let minutes = parseInt(pomodoroLength.textContent);
+  // let pomodoroMinutes = parseInt(pomodoroLength.textContent);
   let seconds = 0;
   if (!isRunning) {
     isRunning = true;
@@ -75,8 +86,8 @@ startBtn.addEventListener("click", () => {
 
 pauseBtn.addEventListener("click", () => {
   if (isRunning) {
-    clearInterval(countdownMinutes);
-    clearInterval(countdownSec);
+    clearInterval(countdownPomodoro);
+    clearInterval(countdownBreak);
     pauseBtn.textContent = "Resume";
     isRunning = false;
   } else {
@@ -89,8 +100,8 @@ pauseBtn.addEventListener("click", () => {
 resetBtn.addEventListener("click", () => {
   startBtn.style.display = "block";
   pauseBtn.style.display = "none";
-  clearInterval(countdownSec);
-  clearInterval(countdownMinutes);
+  clearInterval(countdownBreak);
+  clearInterval(countdownPomodoro);
   countdownEl_min.textContent = pomodoroLength.textContent;
   countdownEl_sec.textContent = "00";
 });
