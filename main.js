@@ -10,7 +10,7 @@ const pomodoroPlusBtn = document.querySelector(".pomodoro-plus");
 const breakLength = document.querySelector(".break h2");
 const pomodoroLength = document.querySelector(".pomodoro h2");
 
-let pomodoroMinutes = parseInt(pomodoroLength.textContent);
+let pomodoroMinutes;
 let breakMinutes = parseInt(breakLength.textContent);
 let seconds = 0;
 let countdownPomodoro;
@@ -74,12 +74,13 @@ function breakCountdown(minutes, seconds) {
 }
 
 startBtn.addEventListener("click", () => {
-  // let pomodoroMinutes = parseInt(pomodoroLength.textContent);
+  pomodoroMinutes = parseInt(pomodoroLength.textContent);
   let seconds = 0;
   if (!isRunning) {
     isRunning = true;
     startBtn.style.display = "none";
     pauseBtn.style.display = "block";
+    breakMinutes = parseInt(breakLength.textContent);
     startCountdown(pomodoroMinutes, seconds);
   }
 });
