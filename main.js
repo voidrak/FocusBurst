@@ -1,6 +1,7 @@
 const countdownEl_min = document.querySelector(".time h1");
 const countdownEl_sec = document.querySelector(".time h2");
 const startBtn = document.querySelector(".start h3");
+const pauseBtn = document.querySelector(".start h2");
 const resetBtn = document.querySelector(".reset h3");
 const breakMinusBtn = document.querySelector(".break-minus");
 const breakPlusBtn = document.querySelector(".break-plus");
@@ -10,24 +11,31 @@ const breakLength = document.querySelector(".break h2");
 const pomodoroLength = document.querySelector(".pomodoro h2");
 
 let minutes = parseInt(pomodoroLength.textContent);
-let seconds = 0;
 let breakMinutes = parseInt(breakLength.textContent);
+let seconds = 0;
 let countdown;
+let isRunning = false;
+let minutesRemaining = 0;
+let secondsRemaining = 0;
 
 function startCountdown(minutes, seconds) {
   let totalSeconds = minutes * 60 + seconds;
 
   countdown = setInterval(function () {
-    let minutesRemaining = Math.floor(totalSeconds / 60);
-    let secondsRemaining = totalSeconds % 60;
+    if (isRunning && totalSeconds != 0) {
+      minutesRemaining = Math.floor(totalSeconds / 60);
+      secondsRemaining = totalSeconds % 60;
 
-    countdownEl_min.textContent = minutesRemaining;
-    countdownEl_sec.textContent = secondsRemaining;
+      countdownEl_min.textContent = minutesRemaining;
+      countdownEl_sec.textContent = secondsRemaining;
 
-    totalSeconds--;
+      totalSeconds--;
 
-    if (totalSeconds < 0) {
-      clearInterval(countdown);
+      if (totalSeconds < 0) {
+        clearInterval(countdown);
+      }
+    } else {
+      breakCountdown(breakMinutes, 0);
     }
   }, 1000);
 }
@@ -35,16 +43,20 @@ function breakCountdown(minutes, seconds) {
   let totalSeconds = minutes * 60 + seconds;
 
   countdown = setInterval(function () {
-    let minutesRemaining = Math.floor(totalSeconds / 60);
-    let secondsRemaining = totalSeconds % 60;
+    if (totalSeconds != 0) {
+      let minutesRemaining = Math.floor(totalSeconds / 60);
+      let secondsRemaining = totalSeconds % 60;
 
-    countdownEl_min.textContent = minutesRemaining;
-    countdownEl_sec.textContent = secondsRemaining;
+      countdownEl_min.textContent = minutesRemaining;
+      countdownEl_sec.textContent = secondsRemaining;
 
-    totalSeconds--;
+      totalSeconds--;
 
-    if (totalSeconds < 0) {
-      clearInterval(countdown);
+      if (totalSeconds < 0) {
+        clearInterval(countdown);
+      }
+    } else {
+      startCountdown(minutes, seconds);
     }
   }, 1000);
 }
@@ -52,10 +64,29 @@ function breakCountdown(minutes, seconds) {
 startBtn.addEventListener("click", () => {
   let minutes = parseInt(pomodoroLength.textContent);
   let seconds = 0;
-  startCountdown(minutes, seconds);
+  if (!isRunning) {
+    isRunning = true;
+    startBtn.style.display = "none";
+    pauseBtn.style.display = "block";
+    startCountdown(minutes, seconds);
+  }
+});
+
+pauseBtn.addEventListener("click", () => {
+  if (isRunning) {
+    clearInterval(countdown);
+    pauseBtn.textContent = "Resume";
+    isRunning = false;
+  } else {
+    isRunning = true;
+    startCountdown(minutesRemaining, secondsRemaining);
+    pauseBtn.textContent = "Pause";
+  }
 });
 
 resetBtn.addEventListener("click", () => {
+  startBtn.style.display = "block";
+  pauseBtn.style.display = "none";
   clearInterval(countdown);
   countdownEl_min.textContent = pomodoroLength.textContent;
   countdownEl_sec.textContent = "00";

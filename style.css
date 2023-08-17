@@ -65,6 +65,10 @@ body {
 .start-reset-btn .btn button:hover {
   background-color: inherit;
 }
+
+.start h2 {
+  display: none;
+}
 .add-btn {
   margin-top: 2rem;
   display: flex;
