@@ -9,60 +9,38 @@ const pomodoroPlusBtn = document.querySelector(".pomodoro-plus");
 const breakLength = document.querySelector(".break h2");
 const pomodoroLength = document.querySelector(".pomodoro h2");
 
-let countMin ;
-let countSec = countdownEl_sec.textContent;
-let timeoutSec;
-let timeoutMin;
+let minutes = parseInt(pomodoroLength.textContent);
+let seconds = 0;
+let countdown;
 
-function countdownMin() {
-  if(countMin==1){
-    countMin=0;
-  }
-  if(countMin===0 ){
-    console.log("00");
-    clearTimeout(timeoutSec);
-    clearTimeout(timeoutMin);
-  countdownEl_sec.textContent=0;
-  }
-  
-  countdownEl_min.textContent = countMin;
-  countMin--;
-  if (countMin >= 0) {
-    timeoutMin = setTimeout(countdownMin, 60000);
-  }
-}
+function startCountdown(minutes, seconds) {
+  let totalSeconds = minutes * 60 + seconds;
 
-function countdownSec() {
-  
-  if(countSec===0){
-    console.log("00");
-    // clearTimeout(timeoutSec);
-    // clearTimeout(timeoutMin);
-  // countdownEl_sec.textContent=0;
-  }
-    countdownEl_sec.textContent = countSec;
-    if(countSec==0){
-      countSec=60;
+  countdown = setInterval(function () {
+    let minutesRemaining = Math.floor(totalSeconds / 60);
+    let secondsRemaining = totalSeconds % 60;
+
+    countdownEl_min.textContent = minutesRemaining;
+    countdownEl_sec.textContent = secondsRemaining;
+
+    totalSeconds--;
+
+    if (totalSeconds < 0) {
+      clearInterval(countdown);
     }
-    countSec--;
-    if (countSec >= 0) {
-      timeoutSec = setTimeout(countdownSec, 1000);
-    }
-  
-  
+  }, 1000);
 }
 
 startBtn.addEventListener("click", () => {
-  countMin = pomodoroLength.textContent;
-  countdownMin();
-  countdownSec();
+  let minutes = parseInt(pomodoroLength.textContent);
+  let seconds = 0;
+  startCountdown(minutes, seconds);
 });
 
 resetBtn.addEventListener("click", () => {
-  clearTimeout(timeoutSec);
-  clearTimeout(timeoutMin);
+  clearInterval(countdown);
   countdownEl_min.textContent = pomodoroLength.textContent;
-  countdownEl_sec.textContent="00";
+  countdownEl_sec.textContent = "00";
 });
 
 breakPlusBtn.addEventListener("click", () => {
