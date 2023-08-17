@@ -11,9 +11,27 @@ const pomodoroLength = document.querySelector(".pomodoro h2");
 
 let minutes = parseInt(pomodoroLength.textContent);
 let seconds = 0;
+let breakMinutes = parseInt(breakLength.textContent);
 let countdown;
 
 function startCountdown(minutes, seconds) {
+  let totalSeconds = minutes * 60 + seconds;
+
+  countdown = setInterval(function () {
+    let minutesRemaining = Math.floor(totalSeconds / 60);
+    let secondsRemaining = totalSeconds % 60;
+
+    countdownEl_min.textContent = minutesRemaining;
+    countdownEl_sec.textContent = secondsRemaining;
+
+    totalSeconds--;
+
+    if (totalSeconds < 0) {
+      clearInterval(countdown);
+    }
+  }, 1000);
+}
+function breakCountdown(minutes, seconds) {
   let totalSeconds = minutes * 60 + seconds;
 
   countdown = setInterval(function () {
