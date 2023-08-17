@@ -10,10 +10,11 @@ const pomodoroPlusBtn = document.querySelector(".pomodoro-plus");
 const breakLength = document.querySelector(".break h2");
 const pomodoroLength = document.querySelector(".pomodoro h2");
 
-let minutes = parseInt(pomodoroLength.textContent);
+let pomodoroMinutes = parseInt(pomodoroLength.textContent);
 let breakMinutes = parseInt(breakLength.textContent);
 let seconds = 0;
-let countdown;
+let countdownMinutes;
+let countdownSec;
 let isRunning = false;
 let minutesRemaining = 0;
 let secondsRemaining = 0;
@@ -21,7 +22,7 @@ let secondsRemaining = 0;
 function startCountdown(minutes, seconds) {
   let totalSeconds = minutes * 60 + seconds;
 
-  countdown = setInterval(function () {
+  countdownMinutes = setInterval(function () {
     if (isRunning && totalSeconds != 0) {
       minutesRemaining = Math.floor(totalSeconds / 60);
       secondsRemaining = totalSeconds % 60;
@@ -32,7 +33,7 @@ function startCountdown(minutes, seconds) {
       totalSeconds--;
 
       if (totalSeconds < 0) {
-        clearInterval(countdown);
+        clearInterval(countdownMinutes);
       }
     } else {
       breakCountdown(breakMinutes, 0);
@@ -42,7 +43,7 @@ function startCountdown(minutes, seconds) {
 function breakCountdown(minutes, seconds) {
   let totalSeconds = minutes * 60 + seconds;
 
-  countdown = setInterval(function () {
+  countdownSec = setInterval(function () {
     if (totalSeconds != 0) {
       let minutesRemaining = Math.floor(totalSeconds / 60);
       let secondsRemaining = totalSeconds % 60;
@@ -53,10 +54,10 @@ function breakCountdown(minutes, seconds) {
       totalSeconds--;
 
       if (totalSeconds < 0) {
-        clearInterval(countdown);
+        clearInterval(countdownSec);
       }
     } else {
-      startCountdown(minutes, seconds);
+      startCountdown(pomodoroMinutes, seconds);
     }
   }, 1000);
 }
@@ -68,13 +69,14 @@ startBtn.addEventListener("click", () => {
     isRunning = true;
     startBtn.style.display = "none";
     pauseBtn.style.display = "block";
-    startCountdown(minutes, seconds);
+    startCountdown(pomodoroMinutes, seconds);
   }
 });
 
 pauseBtn.addEventListener("click", () => {
   if (isRunning) {
-    clearInterval(countdown);
+    clearInterval(countdownMinutes);
+    clearInterval(countdownSec);
     pauseBtn.textContent = "Resume";
     isRunning = false;
   } else {
@@ -87,7 +89,8 @@ pauseBtn.addEventListener("click", () => {
 resetBtn.addEventListener("click", () => {
   startBtn.style.display = "block";
   pauseBtn.style.display = "none";
-  clearInterval(countdown);
+  clearInterval(countdownSec);
+  clearInterval(countdownMinutes);
   countdownEl_min.textContent = pomodoroLength.textContent;
   countdownEl_sec.textContent = "00";
 });
