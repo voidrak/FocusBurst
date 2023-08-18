@@ -57,9 +57,6 @@ body {
   width: 100%;
   padding: 1rem;
 }
-.pause {
-  /* display: none; */
-}
 .start-reset-btn .btn {
   background-color: var(--WhiteGray);
   padding: 0.5rem;
