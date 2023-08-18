@@ -4,11 +4,12 @@
   box-sizing: border-box;
 }
 :root {
-  --BG: #ff8a00;
+  --BG: #7fffd4;
   --WhiteGray: #d9d9d9;
 }
 body {
   background-color: var(--BG);
+  /* background-color: black; */
   height: 100svh;
   display: grid;
   place-content: center;
@@ -51,9 +52,13 @@ body {
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
+  align-items: center;
   column-gap: 10rem;
   width: 100%;
   padding: 1rem;
+}
+.pause {
+  /* display: none; */
 }
 .start-reset-btn .btn {
   background-color: var(--WhiteGray);
@@ -66,7 +71,7 @@ body {
   background-color: inherit;
 }
 
-.start h2 {
+.pause {
   display: none;
 }
 .add-btn {
@@ -105,4 +110,37 @@ body {
 }
 .length .white-bg i {
   font-size: 2rem;
+}
+#personal {
+  margin-top: 3rem;
+}
+#personal a:any-link {
+  text-align: center;
+  text-decoration: none;
+  color: #ff8a00;
+}
+
+@media screen and (max-width: 669px) {
+  .time h2,
+  .time h1,
+  .time span {
+    font-size: 5vw;
+    font-weight: 600;
+  }
+
+  .add-btn {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 1rem;
+    place-items: center;
+  }
+  .length {
+    width: 50vw;
+  }
+
+  .length > h2,
+  .pomodoro h3 {
+    color: white;
+    padding: 3vw;
+  }
 }

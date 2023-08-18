@@ -1,7 +1,17 @@
+//  ADD BOX SHADOW
+//  ADD MORE TEXTS LIKE QUOTES
+//   ADD THE APP NAME LIKE LOGO
+//  TRY WHITE AND BLACK IN COUNTDOWN
+// SPOTIFY
+// MAKE THE COUNTDOWN SMALL PART OF THE WEB
+//
+//
+//
+
 const countdownEl_min = document.querySelector(".time h1");
 const countdownEl_sec = document.querySelector(".time h2");
-const startBtn = document.querySelector(".start h3");
-const pauseBtn = document.querySelector(".start h2");
+const startBtn = document.querySelector(".start-h2");
+const pauseBtn = document.querySelector(".pause");
 const resetBtn = document.querySelector(".reset h3");
 const breakMinusBtn = document.querySelector(".break-minus");
 const breakPlusBtn = document.querySelector(".break-plus");
@@ -89,12 +99,12 @@ pauseBtn.addEventListener("click", () => {
   if (isRunning) {
     clearInterval(countdownPomodoro);
     clearInterval(countdownBreak);
-    pauseBtn.textContent = "Resume";
+    pauseBtn.innerHTML = "<h3>Resume</h3>";
     isRunning = false;
   } else {
     isRunning = true;
     startCountdown(minutesRemaining, secondsRemaining);
-    pauseBtn.textContent = "Pause";
+    pauseBtn.innerHTML = "<h3>Pause</h3>";
   }
 });
 
