@@ -8,7 +8,10 @@
   --WhiteGray: #d9d9d9;
 }
 body {
-  background-color: var(--BG);
+  /* background-color: var(--BG); */
+  background-image: url(img/sea-landscape1.jpg);
+  background-size: cover;
+  background-position: center;
   /* background-color: black; */
   height: 100svh;
   display: grid;
@@ -110,6 +113,11 @@ body {
 }
 #personal {
   margin-top: 3rem;
+  padding: 1rem;
+}
+#personal p {
+  font-weight: 900;
+  color: #d9d9d9;
 }
 #personal a:any-link {
   text-align: center;
