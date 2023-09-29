@@ -31,6 +31,16 @@ let isRunning = false;
 let minutesRemaining = 0;
 let secondsRemaining = 0;
 
+function requestNotificationPermission() {
+  return Notification.requestPermission();
+}
+
+function showNotification(title, body) {
+  if (Notification.permission === "granted") {
+    new Notification(title, { body });
+  }
+}
+
 window.addEventListener("load", function () {
   document.body.classList.add("body-loaded");
 });
@@ -42,6 +52,11 @@ function playAlertSound() {
 }
 
 function startCountdown(minutes, seconds) {
+  requestNotificationPermission().then(function (permission) {
+    if (permission === "granted") {
+      showNotification("Hey 👋", "Time to Focus ");
+    }
+  });
   pomodoroContainer.style.backgroundColor = "rgb(28, 201, 22)";
   breakContainer.style.backgroundColor = "black";
 
@@ -68,6 +83,12 @@ function startCountdown(minutes, seconds) {
 }
 
 function breakCountdown(minutes, seconds) {
+  requestNotificationPermission().then(function (permission) {
+    if (permission === "granted") {
+      showNotification("Hey 👋", "Let's Take a Break ");
+    }
+  });
+
   pauseBtn.style.display = "none";
   breakContainer.style.backgroundColor = "rgb(28, 201, 22)";
   pomodoroContainer.style.backgroundColor = "black";
