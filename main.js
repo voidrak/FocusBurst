@@ -7,7 +7,7 @@
 //
 //
 //
-
+const body = document.querySelector("body");
 const countdownEl_min = document.querySelector(".time h1");
 const countdownEl_sec = document.querySelector(".time h2");
 const startBtn = document.querySelector(".start-h2");
@@ -19,6 +19,8 @@ const pomodoroMinusBtn = document.querySelector(".pomodoro-minus");
 const pomodoroPlusBtn = document.querySelector(".pomodoro-plus");
 const breakLength = document.querySelector(".break h2");
 const pomodoroLength = document.querySelector(".pomodoro h2");
+const breakContainer = document.querySelector(".add-btn .break");
+const pomodoroContainer = document.querySelector(".add-btn .pomodoro");
 
 let pomodoroMinutes;
 let breakMinutes = parseInt(breakLength.textContent);
@@ -29,6 +31,10 @@ let isRunning = false;
 let minutesRemaining = 0;
 let secondsRemaining = 0;
 
+window.addEventListener("load", function () {
+  document.body.classList.add("body-loaded");
+});
+
 function playAlertSound() {
   // Create an Audio object and provide the path to the sound file
   let alertSound = new Audio("beep.mp3");
@@ -36,6 +42,9 @@ function playAlertSound() {
 }
 
 function startCountdown(minutes, seconds) {
+  pomodoroContainer.style.backgroundColor = "rgb(28, 201, 22)";
+  breakContainer.style.backgroundColor = "black";
+
   let totalSeconds = minutes * 60 + seconds;
 
   countdownPomodoro = setInterval(function () {
@@ -60,6 +69,9 @@ function startCountdown(minutes, seconds) {
 
 function breakCountdown(minutes, seconds) {
   pauseBtn.style.display = "none";
+  breakContainer.style.backgroundColor = "rgb(28, 201, 22)";
+  pomodoroContainer.style.backgroundColor = "black";
+
   let totalSeconds = minutes * 60 + seconds;
 
   countdownBreak = setInterval(function () {

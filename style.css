@@ -14,8 +14,27 @@ body {
   background-position: center;
   /* background-color: black; */
   height: 100svh;
-  display: grid;
-  place-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.body-loaded #preloader {
+  display: none;
+}
+
+/* .body-loaded,
+.container {
+  display: block;
+} */
+.body-loaded .container {
+  /* background-color: orangered; */
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 80vw;
+  height: 675px;
 }
 .container {
   /* background-color: orangered; */
@@ -40,15 +59,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--WhiteGray);
   width: 40%;
   aspect-ratio: 1.5;
 }
 .time h2,
 .time h1,
 .time span {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 3rem;
+  font-weight: 900;
+  text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.9);
 }
 .start-reset-btn {
   /* background-color: aqua; */
@@ -80,6 +99,9 @@ body {
   width: 100%;
   justify-content: space-evenly;
 }
+/* .add-btn .break {
+  background-color: rgb(28, 201, 22);
+} */
 .length {
   background-color: black;
   display: flex;
