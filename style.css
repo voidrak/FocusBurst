@@ -36,14 +36,7 @@ body {
   width: 80vw;
   height: 675px;
 }
-.container {
-  /* background-color: orangered; */
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  width: 80vw;
-  height: 675px;
-}
+
 .countdown-display {
   margin-top: 20px;
   display: flex;
