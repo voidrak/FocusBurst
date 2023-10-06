@@ -1,12 +1,3 @@
-//  ADD BOX SHADOW
-//  ADD MORE TEXTS LIKE QUOTES
-//   ADD THE APP NAME LIKE LOGO
-//  TRY WHITE AND BLACK IN COUNTDOWN
-// SPOTIFY
-// MAKE THE COUNTDOWN SMALL PART OF THE WEB
-//
-//
-//
 const body = document.querySelector("body");
 const countdownEl_min = document.querySelector(".time h1");
 const countdownEl_sec = document.querySelector(".time h2");
@@ -21,6 +12,7 @@ const breakLength = document.querySelector(".break h2");
 const pomodoroLength = document.querySelector(".pomodoro h2");
 const breakContainer = document.querySelector(".add-btn .break");
 const pomodoroContainer = document.querySelector(".add-btn .pomodoro");
+const headTitle = document.querySelector("title");
 
 let pomodoroMinutes;
 let breakMinutes = parseInt(breakLength.textContent);
@@ -52,6 +44,8 @@ function playAlertSound() {
 }
 
 function startCountdown(minutes, seconds) {
+  //
+
   requestNotificationPermission().then(function (permission) {
     if (permission === "granted") {
       showNotification("Hey 👋", "Time to Focus ");
@@ -70,7 +64,9 @@ function startCountdown(minutes, seconds) {
       countdownEl_min.textContent = minutesRemaining;
       countdownEl_sec.textContent =
         secondsRemaining < 10 ? "0" + secondsRemaining : secondsRemaining;
-
+      headTitle.textContent = `${minutesRemaining}:${
+        secondsRemaining < 10 ? "0" + secondsRemaining : secondsRemaining
+      } `;
       if (totalSeconds === 0) {
         clearInterval(countdownPomodoro);
         playAlertSound();
@@ -103,6 +99,9 @@ function breakCountdown(minutes, seconds) {
       countdownEl_min.textContent = minutesRemaining;
       countdownEl_sec.textContent =
         secondsRemaining < 10 ? "0" + secondsRemaining : secondsRemaining;
+      headTitle.textContent = `${minutesRemaining}:${
+        secondsRemaining < 10 ? "0" + secondsRemaining : secondsRemaining
+      } `;
 
       if (totalSeconds === 0) {
         clearInterval(countdownBreak);
